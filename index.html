@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stayora — Room Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i><i></i></div>
+<canvas id="bg"></canvas>
+<div class="wrap">
+  <nav>
+    <div class="brand"><div class="mark">S</div><div><b>Stayora</b><small>Room Intelligence</small></div></div>
+    <div class="status" id="status"><span class="dot"></span><span id="statusText">Checking API…</span></div>
+  </nav>
+
+  <section class="hero">
+    <span class="eyebrow">AI-powered listing analysis</span>
+    <h1>Discover your listing's <em>room type</em>, instantly.</h1>
+    <p>Share a few details about your property and Stayora's trained model predicts its category with a transparent confidence breakdown.</p>
+  </section>
+
+  <div class="layout">
+    <section class="card">
+      <form id="form" novalidate>
+        <fieldset>
+          <div class="sec"><span class="num">01</span><h2>Location</h2></div>
+          <div class="chips" id="chips"></div>
+          <div class="grid">
+            <div class="field"><label for="neighbourhood_group">Borough</label>
+              <input id="neighbourhood_group" list="groups" placeholder="Manhattan">
+              <datalist id="groups"><option value="Manhattan"><option value="Brooklyn"><option value="Queens"><option value="Bronx"><option value="Staten Island"></datalist></div>
+            <div class="field"><label for="neighbourhood">Neighbourhood</label>
+              <input id="neighbourhood" list="hoods" placeholder="Harlem"><datalist id="hoods"></datalist></div>
+            <div class="field"><label for="latitude">Latitude</label><input id="latitude" type="number" step="any" placeholder="40.7831"></div>
+            <div class="field"><label for="longitude">Longitude</label><input id="longitude" type="number" step="any" placeholder="-73.9712"></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="sec"><span class="num">02</span><h2>Pricing &amp; Availability</h2></div>
+          <div class="grid">
+            <div class="field"><label for="price">Price per night ($)</label><input id="price" type="number" min="1" step="any" placeholder="150"></div>
+            <div class="field"><label for="minimum_nights">Minimum nights</label><input id="minimum_nights" type="number" min="1" max="365" placeholder="3"></div>
+            <div class="field full"><label for="availability_365">Available days per year</label>
+              <div class="slider-row"><input id="availability_365" type="range" min="0" max="365" value="180"><span class="badge" id="availBadge">180</span></div></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="sec"><span class="num">03</span><h2>Reviews &amp; Host</h2></div>
+          <div class="grid">
+            <div class="field"><label for="number_of_reviews">Total reviews</label><input id="number_of_reviews" type="number" min="0" placeholder="45"></div>
+            <div class="field"><label for="reviews_per_month">Reviews per month</label><input id="reviews_per_month" type="number" min="0" step="any" placeholder="1.2"></div>
+            <div class="field full"><label for="calculated_host_listings_count">Host's total listings</label><input id="calculated_host_listings_count" type="number" min="0" placeholder="2"></div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn primary" id="submitBtn" type="submit"><span class="spinner"></span>Predict Room Type</button>
+          <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+        <label class="demo"><input type="checkbox" id="demo"> Demo mode — simulated result, no API required</label>
+      </form>
+    </section>
+
+    <aside class="card side">
+      <h3>Prediction</h3>
+      <div class="placeholder" id="placeholder"><span class="big">🏙️</span>Your result will appear here.<br>Complete the form and select <b>Predict</b>.</div>
+      <div class="result" id="result">
+        <div class="ring">
+          <svg width="150" height="150" viewBox="0 0 120 120">
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0dba5"/><stop offset="1" stop-color="#7b5cff"/></linearGradient></defs>
+            <circle class="bg" cx="60" cy="60" r="54" fill="none" stroke-width="8"/>
+            <circle class="fg" id="ringFg" cx="60" cy="60" r="54" fill="none" stroke-width="8"/>
+          </svg>
+          <div class="ring-in"><span id="ringNum">0%</span><small>confidence</small></div>
+        </div>
+        <span class="result-emoji" id="resEmoji">🏠</span>
+        <div class="result-label">Predicted room type</div>
+        <div class="result-type" id="resType">—</div>
+        <div id="resConf" hidden></div>
+        <div class="bars" id="bars"></div>
+      </div>
+    </aside>
+  </div>
+  <footer>Stayora · Crafted with FastAPI &amp; scikit-learn</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
