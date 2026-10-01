@@ -36,6 +36,9 @@ class Features(BaseModel):
     neighbourhood: str = Field(..., min_length=1, description="Specific neighbourhood name")
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get('/')
 def greet():

@@ -22,7 +22,7 @@ const RULES = {
   availability_365: [0, 365],
 };
 
-const apiBase = "http://127.0.0.1:8000"; // change if your FastAPI runs elsewhere
+const apiBase = "https://nyc-rooms-predictions-grhe.onrender.com"; // change if your FastAPI runs elsewhere
 
 function localStorageSafe(k, v) {
   try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch { return null; }
